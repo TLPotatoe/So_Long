@@ -6,7 +6,7 @@
 #    By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 15:55:14 by tlamit            #+#    #+#              #
-#    Updated: 2026/01/16 17:42:37 by tlamit           ###   ########.fr        #
+#    Updated: 2026/01/16 19:09:39 by tlamit           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,8 +55,7 @@ clean:
 	$(MAKE) -C $(LIBFT_DIR) clean
 	$(MAKE) -C $(MacroLibX_DIR) clean
 
-fclean:
-	clean
+fclean:	clean
 	rm -f $(NAME)
 	$(MAKE) -C $(LIBFT_DIR) fclean
 	$(MAKE) -C $(MacroLibX_DIR) fclean
