@@ -6,26 +6,28 @@
 #    By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 15:55:14 by tlamit            #+#    #+#              #
-#    Updated: 2026/01/15 16:01:44 by tlamit           ###   ########.fr        #
+#    Updated: 2026/01/16 17:42:37 by tlamit           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC := cc
-
-SRCS_DIR := src
 
 SRCS := so_long.c
 
 HEADER := -I includes \
 		-I Libft_C
 
-NAME := client
-OBJS := $(SRCS_CLIENT:.c=.o)
+NAME := so_long
+OBJS := $(SRCS:.c=.o)
 
-LIBFT 		:= Libft_C/libft.a
-MINILIBX	:= minilibx-linux/libmlx.a
+LIBFT_DIR	:=	Libft_C
+LIBFT 		:=	$(LIBFT_DIR)/libft.a
 
-LIBS := $(LIBFT)
+MacroLibX_DIR	:= MacroLibX
+MacroLibX		:= $(MacroLibX_DIR)/libmlx.so
+
+LIBS := $(LIBFT) $(MacroLibX)
+SDL_LIBS := -lSDL2 -lvulkan -ldl -lm -pthread
 
 ifndef DEBUG
 	CFLAGS := -Wall -Wextra -Werror -g $(HEADER)
@@ -36,25 +38,32 @@ endif
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBS)
-	$(CC) $(OBJS) $(LIBS) -o $(NAME)
+	$(CC) $(OBJS) $(LIBS) $(SDL_LIBS) -o $(NAME)
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-$(LIBFT):
-	$(MAKE) -C Libft_C -j
 
-$(MINILIBX):
-	$(MAKE) -C minilibx -j
+$(LIBFT): submodule_init
+	$(MAKE) -C $(LIBFT_DIR) -j
+
+$(MacroLibX): submodule_init
+	$(MAKE) -C $(MacroLibX_DIR) -j
 
 clean:
 	rm -f $(OBJS)
-	$(MAKE) -C Libft_C clean
+	$(MAKE) -C $(LIBFT_DIR) clean
+	$(MAKE) -C $(MacroLibX_DIR) clean
 
-fclean: clean
+fclean:
+	clean
 	rm -f $(NAME)
-	$(MAKE) -C Libft_C fclean
+	$(MAKE) -C $(LIBFT_DIR) fclean
+	$(MAKE) -C $(MacroLibX_DIR) fclean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+submodule_init:
+	git submodule update --init --recursive
+
+.PHONY: all clean fclean re submodule_init
