@@ -6,13 +6,14 @@
 #    By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 15:55:14 by tlamit            #+#    #+#              #
-#    Updated: 2026/01/16 19:16:36 by tlamit           ###   ########.fr        #
+#    Updated: 2026/01/19 18:26:45 by tlamit           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC := cc
 
-SRCS := so_long.c
+SRCS := so_long.c \
+		src/parse/parser.c
 
 HEADER := -I includes \
 		-I Libft_C

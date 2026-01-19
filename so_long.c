@@ -5,14 +5,40 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/15 18:03:57 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/16 17:03:05 by tlamit           ###   ########.fr       */
+/*   Created: 2026/01/19 15:24:56 by tlamit            #+#    #+#             */
+/*   Updated: 2026/01/19 19:04:09 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MacroLibX/includes/mlx.h"
+#include "so_long.h"
 
-int	main(void)
+int	check_file(char *filename)
 {
-	mlx_context mlx = mlx_init();
+	char	*end;
+	int		len;
+
+	end = ft_strrchr(filename, '.');
+	if (!end)
+		return (0);
+	if (ft_strlen(filename) <= 4)
+		return (0);
+	len = ft_strlen(filename + (end - filename));
+	if (len != 4)
+		return (0);
+	if (ft_strncmp(filename + (end - filename), ".ber", 3))
+		return (0);
+	return (1);
+}
+
+int	main(int ac, char **av)
+{
+	int	*map;
+
+	if (ac != 2)
+		return (0);
+	if (!check_file(av[1]))
+		return (0);
+	map = parse_map(av[1]);
+	if (!map)
+		return (0);
 }
