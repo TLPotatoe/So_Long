@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:24:56 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/19 19:04:09 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/01/20 16:40:06 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	check_file(char *filename)
 
 int	main(int ac, char **av)
 {
-	int	*map;
+	char	*map;
 
 	if (ac != 2)
 		return (0);
@@ -41,4 +41,5 @@ int	main(int ac, char **av)
 	map = parse_map(av[1]);
 	if (!map)
 		return (0);
+	free(map);
 }

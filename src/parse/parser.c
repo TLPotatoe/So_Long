@@ -6,62 +6,11 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 17:37:31 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/20 14:14:52 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/01/20 16:47:56 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-// static int	map_len(char *filename)
-// {
-// 	int		fd;
-// 	int		len;
-// 	char	*line;
-// 	size_t	prev_len;
-
-// 	len = 0;
-// 	fd = open(filename, O_RDONLY);
-// 	if (fd == -1)
-// 		return (0);
-// 	prev_len = 2147483648;
-// 	while (1)
-// 	{
-// 		line = get_next_line(fd);
-// 		ft_printf("GNL LEN %d PREV %d\n", ft_strlen(line), prev_len);
-// 		if (!line || (ft_strlen(line) != prev_len && prev_len != 2147483648))
-// 		{
-// 			close(fd);
-// 			return (len);
-// 		}
-// 		prev_len = ft_strlen(line);
-// 		len += prev_len - 1;
-// 		free(line);
-// 	}
-// 	close(fd);
-// 	return (len);
-// }
-
-// int	*parse_map(char *filename)
-// {
-// 	int	i;
-// 	int	fd;
-// 	int	len;
-// 	int	*map;
-
-// 	len = map_len(filename);
-// 	if (!len)
-// 		return (NULL);
-// 	map = malloc(sizeof(char *) * (len + 1));
-// 	fd = open(filename, O_RDONLY);
-// 	if (fd == -1)
-// 		return (NULL);
-// 	i = 0;
-// 	while (1)
-// 	{
-// 		len = read(fd, &(map[i++]), 1);
-// 	}
-// 	return (NULL);
-// }
 
 static void	free_buff_line(char **line, char **buff)
 {
@@ -82,10 +31,10 @@ static char	*get_raw_file(char *filename)
 	line = NULL;
 	while (1)
 	{
-		buffer = malloc(17);
+		buffer = malloc(BUFFER_SIZE + 1);
 		if (!buffer)
 			free_buff_line(&line, &buffer);
-		len = read(fd, buffer, 16);
+		len = read(fd, buffer, BUFFER_SIZE);
 		if (!len)
 			break ;
 		buffer[len] = 0;
@@ -96,13 +45,52 @@ static char	*get_raw_file(char *filename)
 	return (line);
 }
 
+static int	check_border(char *data, int len)
+{
+	int	index;
+
+	index = 0;
+	ft_printf("\n");
+	while (index <= len)
+	{
+		if (data[index] == '\n')
+			len++;
+		ft_printf("%c", data[index]);
+		index++;
+	}
+	ft_printf("\n");
+	return (0);
+}
+
+static int	check_map(char *data)
+{
+	int	len;
+	int	index;
+	int	linelen;
+
+	len = 0;
+	index = 0;
+	linelen = 0;
+	while (data[index])
+	{
+		ft_printf("%c", data[index]);
+		if (data[index] == '\n' && !linelen)
+			linelen = index;
+		if (data[index] != '\n')
+			len++;
+		index++;
+	}
+	if (len % linelen != 0)
+		return (0);
+	check_border(data, len);
+	return (1);
+}
+
 char	*parse_map(char *filename)
 {
-	char *raw;
+	char	*raw;
 
 	raw = get_raw_file(filename);
-	ft_printf("%s\n", raw);
-	free(raw);
-
-	return (NULL);
+	check_map(raw);
+	return (raw);
 }
