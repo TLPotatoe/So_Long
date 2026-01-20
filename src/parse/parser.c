@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 17:37:31 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/20 16:47:56 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/01/20 19:29:38 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	*get_raw_file(char *filename)
 	return (line);
 }
 
-static int	check_border(char *data, int len)
+static int	check_border(char *data, int len, int ll)
 {
 	int	index;
 
@@ -53,12 +53,10 @@ static int	check_border(char *data, int len)
 	ft_printf("\n");
 	while (index <= len)
 	{
-		if (data[index] == '\n')
-			len++;
-		ft_printf("%c", data[index]);
-		index++;
+		if (index % ll == 0)
+			ft_printf("\n");
+		ft_printf("%c", data[index++]);
 	}
-	ft_printf("\n");
 	return (0);
 }
 
@@ -73,7 +71,6 @@ static int	check_map(char *data)
 	linelen = 0;
 	while (data[index])
 	{
-		ft_printf("%c", data[index]);
 		if (data[index] == '\n' && !linelen)
 			linelen = index;
 		if (data[index] != '\n')
@@ -82,8 +79,8 @@ static int	check_map(char *data)
 	}
 	if (len % linelen != 0)
 		return (0);
-	check_border(data, len);
-	return (1);
+	ft_remchr(data, "\n");
+	return (check_border(data, len, linelen));
 }
 
 char	*parse_map(char *filename)
