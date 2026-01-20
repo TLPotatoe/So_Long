@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 13:04:47 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/19 18:55:45 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/01/20 14:04:23 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ typedef struct s_mlx
 	t_image		test_png;
 }				t_mlx;
 
-int				*parse_map(char *filename);
+char			*parse_map(char *filename);
 
 #endif
