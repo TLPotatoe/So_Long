@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 17:37:31 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/20 19:29:38 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/01/21 15:17:27 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,14 @@ static int	check_border(char *data, int len, int ll)
 	int	index;
 
 	index = 0;
-	ft_printf("\n");
-	while (index <= len)
+	while (index < len)
 	{
-		if (index % ll == 0)
-			ft_printf("\n");
-		ft_printf("%c", data[index++]);
+		if ((index / ll == 0 || (index / ll) + 1 == len / ll)
+			&& data[index] != '1')
+			return (1);
+		if ((index % ll == 0 || index % ll == ll - 1) && data[index] != '1')
+			return (1);
+		index++;
 	}
 	return (0);
 }
@@ -88,6 +90,6 @@ char	*parse_map(char *filename)
 	char	*raw;
 
 	raw = get_raw_file(filename);
-	check_map(raw);
+	ft_printf("\n%d\n", check_map(raw));
 	return (raw);
 }
