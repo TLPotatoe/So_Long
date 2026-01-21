@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 17:37:31 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/21 15:17:27 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/01/21 18:26:17 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,18 @@ static char	*get_raw_file(char *filename)
 	return (line);
 }
 
-static int	check_border(char *data, int len, int ll)
+static int	check_border(char *data, int len, int line_len)
 {
 	int	index;
 
 	index = 0;
 	while (index < len)
 	{
-		if ((index / ll == 0 || (index / ll) + 1 == len / ll)
+		if ((index / line_len == 0 || (index / line_len) + 1 == len / line_len)
 			&& data[index] != '1')
 			return (1);
-		if ((index % ll == 0 || index % ll == ll - 1) && data[index] != '1')
+		if ((index % line_len == 0 || index % line_len == line_len - 1)
+			&& data[index] != '1')
 			return (1);
 		index++;
 	}
@@ -82,14 +83,20 @@ static int	check_map(char *data)
 	if (len % linelen != 0)
 		return (0);
 	ft_remchr(data, "\n");
-	return (check_border(data, len, linelen));
+	return (!check_border(data, len, linelen) * linelen);
 }
 
-char	*parse_map(char *filename)
+int	parse_map(char *filename, t_map map)
 {
-	char	*raw;
+	int	lenline;
 
-	raw = get_raw_file(filename);
-	ft_printf("\n%d\n", check_map(raw));
-	return (raw);
+	map.data = get_raw_file(filename);
+	map.linelen = check_map(map.data);
+	if (lenline == 0)
+	{
+		free(map.data);
+		return (1);
+	}
+	int check_map_content(raw, filename);
+	return (0);
 }
