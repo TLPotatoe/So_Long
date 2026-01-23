@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 17:37:31 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/23 11:48:40 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/01/23 13:49:43 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,22 @@ static int	check_global_len(char *data)
 {
 	int	index;
 	int	len;
+	int	count;
 
 	index = 0;
 	len = 0;
 	while (data[index] && data[index] != '\n')
+		index++;
+	len = index++;
+	index = 0;
+	while (data[index])
 	{
-		len++;
+		if (data[index] == '\n' && count != len)
+			return (1);
+		if (data[index] != '\n')
+			count++;
+		else
+			count = 0;
 		index++;
 	}
 	index = 0;
@@ -59,8 +69,11 @@ static int	check_border(char *data, int len, int line_len)
 {
 	int	index;
 
-	if (check_global_len(*data))
+	if (check_global_len(data))
+	{
+		ft_printf("Hello");
 		return (1);
+	}
 	ft_remchr(data, "\n");
 	index = 0;
 	while (index < len)
@@ -101,13 +114,13 @@ static int	check_map(char *data)
 int	parse_map(char *filename, t_map map)
 {
 	map.data = get_raw_file(filename);
+	if (!map.data)
+		return (1);
 	map.linelen = check_map(map.data);
-	ft_printf("\nLEN STATUS %d\n", map.linelen);
 	if (map.linelen == 0)
 	{
 		free(map.data);
 		return (1);
 	}
-	ft_printf("\nMAP STATUS %d\n", check_map_content(map.data));
-	return (0);
+	return (!check_map_content(map.data));
 }
