@@ -6,13 +6,13 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:24:56 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/21 18:09:08 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/01/23 11:14:23 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	check_file(char *filename)
+static int	check_file_name(char *filename)
 {
 	char	*end;
 	int		len;
@@ -32,15 +32,13 @@ int	check_file(char *filename)
 
 int	main(int ac, char **av)
 {
-	t_map	map;
-	int		result;
+	static t_map	map = {0};
 
 	if (ac != 2)
 		return (0);
-	if (!check_file(av[1]))
+	if (!check_file_name(av[1]))
 		return (0);
-	result = parse_map(av[1], map);
-	if (!result)
+	if (parse_map(av[1], map))
 		return (0);
 	free(map.data);
 }

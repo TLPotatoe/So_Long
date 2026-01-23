@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_map.c                                       :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/21 17:56:22 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/21 18:00:54 by tlamit           ###   ########.fr       */
+/*   Created: 2026/01/23 11:42:05 by tlamit            #+#    #+#             */
+/*   Updated: 2026/01/23 11:42:47 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static int	count_map_centent(char *map, int linelen);
-
-int	check_map_content(char *map, int linelen)
+void	free_buff_line(char **line, char **buff)
 {
+	free(*line);
+	free(*buff);
 }
