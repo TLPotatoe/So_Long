@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 13:04:47 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/23 11:42:30 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/01/26 19:52:19 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,17 @@ typedef struct s_mlx
 {
 	mlx_context	mlx;
 	mlx_window	win;
-	t_image		test_png;
+	t_image		wall;
+	t_image		coin;
+	t_image		exit;
+	t_image		grass;
+	t_image		player;
 }				t_mlx;
 
-int				parse_map(char *filename, t_map map);
-int				check_map_content(char *data);
+int				flood(t_map *map);
+int				check_map_fill(t_map *map);
+int				check_map_content(t_map *map);
+int				parse_map(char *filename, t_map *map);
 
 void			free_buff_line(char **line, char **buff);
 

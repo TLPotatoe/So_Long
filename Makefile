@@ -6,7 +6,7 @@
 #    By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 15:55:14 by tlamit            #+#    #+#              #
-#    Updated: 2026/01/23 11:42:41 by tlamit           ###   ########.fr        #
+#    Updated: 2026/01/26 17:50:39 by tlamit           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ CC := cc
 SRCS := so_long.c \
 		src/parse/parser.c \
 		src/parse/check_map.c \
+		src/parse/flood_fill.c \
 		src/utils/utils.c
 
 HEADER := -I includes \

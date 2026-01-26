@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 17:37:31 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/23 13:49:43 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/01/26 18:49:45 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static int	check_global_len(char *data)
 		index++;
 	len = index++;
 	index = 0;
+	count = 0;
 	while (data[index])
 	{
 		if (data[index] == '\n' && count != len)
@@ -111,16 +112,16 @@ static int	check_map(char *data)
 	return (!check_border(data, len, linelen) * linelen);
 }
 
-int	parse_map(char *filename, t_map map)
+int	parse_map(char *filename, t_map *map)
 {
-	map.data = get_raw_file(filename);
-	if (!map.data)
+	map->data = get_raw_file(filename);
+	if (!map->data)
 		return (1);
-	map.linelen = check_map(map.data);
-	if (map.linelen == 0)
+	map->linelen = check_map(map->data);
+	if (map->linelen == 0)
 	{
-		free(map.data);
+		free(map->data);
 		return (1);
 	}
-	return (!check_map_content(map.data));
+	return (!check_map_content(map));
 }
