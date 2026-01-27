@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:24:56 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/26 19:16:36 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/01/27 16:11:05 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,7 @@ int	main(int ac, char **av)
 		free(map.data);
 		return (0);
 	}
+	map.previous_slot = 0;
+	game(&map);
 	free(map.data);
 }
