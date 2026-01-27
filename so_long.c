@@ -6,11 +6,11 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:24:56 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/27 16:11:05 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/01/27 16:24:47 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "includes/so_long.h"
 
 static int	check_file_name(char *filename)
 {

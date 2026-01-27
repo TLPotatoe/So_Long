@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:03:57 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/27 16:14:48 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/01/27 17:25:32 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,60 +16,73 @@
 #include <math.h>
 #include <stdio.h>
 
-// int			size = 200;
-
-// static int	process_scale(int dim, int size, int i_scale)
-// {
-// 	return ((float)dim * (float)size / (float)i_scale);
-// }
-
 static float	process_scale(int i_dim, int i_size_pixel)
 {
 	return ((float)i_size_pixel / (float)i_dim);
 }
 
+void	level_finished(t_mlx *mlx)
+{
+	if (!ft_strchr(mlx->map->data, 'T') && !ft_strchr(mlx->map->data, 'S'))
+		mlx_loop_end(mlx->mlx);
+}
+
 void	key_hook(int key, void *param)
 {
-	t_mlx	*mlx;
+	static int	i = 0;
+	t_mlx		*mlx;
 
 	mlx = (t_mlx *)param;
 	if (key == 41)
 		mlx_loop_end(mlx->mlx);
 	else if (key == 79)
-		right(mlx->map);
+	{
+		right(mlx->map, &i);
+		mlx->player_direction = 1;
+	}
 	else if (key == 80)
-		left(mlx->map);
+	{
+		left(mlx->map, &i);
+		mlx->player_direction = 0;
+	}
 	else if (key == 81)
-		up(mlx->map);
+		down(mlx->map, &i);
 	else if (key == 82)
-		down(mlx->map);
-	// mlx_mouse_get_pos(mlx->mlx, &x, &y);
-	// mlx_clear_window(mlx->mlx, mlx->win, (mlx_color){.rgba = 0x000000FF});
-	// mlx_put_transformed_image_to_window(mlx->mlx, mlx->win,
-	// mlx->test_png.image,
-	// mlx->test_png.x, mlx->test_png.y, (float)size
-	// / (float)&mlx->test_png.width, (float)size / (float)mlx->test_png.height,
-	// 0.0f);
+		up(mlx->map, &i);
+	level_finished(mlx);
 }
 
-void	put_transformed_image(t_mlx *mlx, t_image *image, int index)
+void	put_transformed_image(t_mlx *mlx, t_image *image, int index, int state)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
+	float	scale_x;
+	float	scale_y;
 
 	x = index % mlx->map->linelen * mlx->tile_size;
 	y = index / mlx->map->linelen * mlx->tile_size;
-	if (image->image == mlx->player.image || image->image == mlx->coin.image
-		|| image->image == mlx->exit.image)
+	scale_x = process_scale(image->width, mlx->tile_size);
+	scale_y = process_scale(image->height, mlx->tile_size);
+	if (state)
 	{
-		mlx_put_transformed_image_to_window(mlx->mlx, mlx->win,
-			mlx->grass.image, x, y, process_scale(mlx->grass.width,
-				mlx->tile_size), process_scale(mlx->grass.width,
-				mlx->tile_size), 0.0f);
+		x = (index + 1) % mlx->map->linelen * mlx->tile_size;
+		scale_x *= -1;
 	}
 	mlx_put_transformed_image_to_window(mlx->mlx, mlx->win, image->image, x, y,
-		process_scale(image->width, mlx->tile_size), process_scale(image->width,
-			mlx->tile_size), 0.0f);
+		scale_x, scale_y, 0.0f);
+}
+
+void	tile_draw(t_mlx *mlx, t_image *image, int index)
+{
+	if (image->image == mlx->player.image || image->image == mlx->coin.image
+		|| image->image == mlx->exit.image)
+		put_transformed_image(mlx, &mlx->grass, index, 0);
+	if (image->image == mlx->player.image)
+	{
+		put_transformed_image(mlx, &mlx->player, index, mlx->player_direction);
+		return ;
+	}
+	put_transformed_image(mlx, image, index, 0);
 }
 
 void	update(void *param)
@@ -83,22 +96,21 @@ void	update(void *param)
 	while (mlx->map->data[index])
 	{
 		if (mlx->map->data[index] == '1')
-			put_transformed_image(mlx, &mlx->wall, index);
+			tile_draw(mlx, &mlx->wall, index);
 		if (mlx->map->data[index] == 'F')
-			put_transformed_image(mlx, &mlx->grass, index);
+			tile_draw(mlx, &mlx->grass, index);
 		if (mlx->map->data[index] == 'T')
-			put_transformed_image(mlx, &mlx->coin, index);
+			tile_draw(mlx, &mlx->coin, index);
 		if (mlx->map->data[index] == 'S')
-			put_transformed_image(mlx, &mlx->exit, index);
+			tile_draw(mlx, &mlx->exit, index);
 		if (mlx->map->data[index] == 'P')
-			put_transformed_image(mlx, &mlx->player, index);
+			tile_draw(mlx, &mlx->player, index);
 		index++;
 	}
 }
 
 // void	window_size(t_mlx *mlx, mlx_window_create_info info)
 // {
-// 	(void)mlx, info;
 // }
 
 void	window_hook(int event, void *param)
@@ -116,9 +128,10 @@ int	game(t_map *map)
 	static mlx_window_create_info	info = {0};
 
 	info.title = "so_long";
-	mlx.tile_size = 100;
-	info.width = 1920;
-	info.height = 1080;
+	mlx.tile_size = 50;
+	mlx.player_direction = 0;
+	info.width = 1900;
+	info.height = 1000;
 	info.is_resizable = false;
 	mlx.mlx = mlx_init();
 	mlx.win = mlx_new_window(mlx.mlx, &info);

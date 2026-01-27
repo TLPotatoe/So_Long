@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 13:04:47 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/27 16:20:20 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/01/27 17:23:31 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_mlx
 	t_image		exit;
 	t_image		grass;
 	t_image		player;
+	int			player_direction;
 	int			tile_size;
 }				t_mlx;
 
@@ -50,10 +51,10 @@ int				check_map_fill(t_map *map);
 int				check_map_content(t_map *map);
 int				parse_map(char *filename, t_map *map);
 
-void			up(t_map *map);
-void			down(t_map *map);
-void			right(t_map *map);
-void			left(t_map *map);
+void			up(t_map *map, int *i);
+void			down(t_map *map, int *i);
+void			right(t_map *map, int *i);
+void			left(t_map *map, int *i);
 
 void			free_buff_line(char **line, char **buff);
 

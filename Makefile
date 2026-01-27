@@ -6,7 +6,7 @@
 #    By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 15:55:14 by tlamit            #+#    #+#              #
-#    Updated: 2026/01/27 16:18:50 by tlamit           ###   ########.fr        #
+#    Updated: 2026/01/27 16:25:50 by tlamit           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS := so_long.c \
 		src/parse/flood_fill.c \
 		src/utils/utils.c \
 		src/game/game.c \
-		scr/game/moves.c
+		src/game/moves.c
 
 HEADER := -I includes \
 		-I Libft_C
