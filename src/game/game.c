@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:03:57 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/27 17:36:42 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/01/27 19:27:06 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,14 @@ void	tile_draw(t_mlx *mlx, t_image *image, int index)
 {
 	if (image->image == mlx->player.image || image->image == mlx->coin.image
 		|| image->image == mlx->exit.image)
-		put_transformed_image(mlx, &mlx->grass, index, 0);
+		put_transformed_image(mlx, &mlx->ground, index, 0);
 	if (image->image == mlx->player.image)
 	{
 		put_transformed_image(mlx, &mlx->player, index, mlx->player_direction);
 		return ;
 	}
+	if (image->image == mlx->exit.image && ft_strchr(mlx->map->data, 'T'))
+		return ;
 	put_transformed_image(mlx, image, index, 0);
 }
 
@@ -98,7 +100,7 @@ void	update(void *param)
 		if (mlx->map->data[index] == '1')
 			tile_draw(mlx, &mlx->wall, index);
 		if (mlx->map->data[index] == 'F')
-			tile_draw(mlx, &mlx->grass, index);
+			tile_draw(mlx, &mlx->ground, index);
 		if (mlx->map->data[index] == 'T')
 			tile_draw(mlx, &mlx->coin, index);
 		if (mlx->map->data[index] == 'S')
@@ -109,9 +111,23 @@ void	update(void *param)
 	}
 }
 
-// void	window_size(t_mlx *mlx, mlx_window_create_info info)
-// {
-// }
+void	window_size(t_mlx *mlx, mlx_window_create_info *info)
+{
+	float	rescale_x;
+	float	rescale_y;
+
+	rescale_x = (float)mlx->map->linelen * (float)mlx->tile_size
+		/ (float)info->width;
+	rescale_y = (float)ft_strlen(mlx->map->data) / (float)mlx->map->linelen
+		* (float)mlx->tile_size / (float)info->height;
+	if (rescale_x > rescale_y)
+		mlx->tile_size /= rescale_x;
+	else
+		mlx->tile_size /= rescale_y;
+	info->width = mlx->map->linelen * mlx->tile_size;
+	info->height = ft_strlen(mlx->map->data) / mlx->map->linelen
+		* (float)mlx->tile_size;
+}
 
 void	window_hook(int event, void *param)
 {
@@ -122,34 +138,45 @@ void	window_hook(int event, void *param)
 		mlx_loop_end(mlx->mlx);
 }
 
-int	game(t_map *map)
+int	load_images(t_mlx *mlx)
+{
+	mlx->coin.image = mlx_new_image_from_file(mlx->mlx, "images/coin.png",
+			&mlx->coin.width, &mlx->coin.height);
+	mlx->wall.image = mlx_new_image_from_file(mlx->mlx, "images/wall.png",
+			&mlx->wall.width, &mlx->wall.height);
+	mlx->exit.image = mlx_new_image_from_file(mlx->mlx, "images/exit.png",
+			&mlx->exit.width, &mlx->exit.height);
+	mlx->ground.image = mlx_new_image_from_file(mlx->mlx, "images/ground.png",
+			&mlx->ground.width, &mlx->ground.height);
+	mlx->player.image = mlx_new_image_from_file(mlx->mlx, "images/player.png",
+			&mlx->player.width, &mlx->player.height);
+	if (!mlx->coin.image || !mlx->wall.image || !mlx->exit.image
+		|| !mlx->ground.image || !mlx->player.image)
+		return (1);
+	return (0);
+}
+
+void	game(t_map *map)
 {
 	t_mlx							mlx;
 	static mlx_window_create_info	info = {0};
 
+	info.width = 1920;
+	info.height = 1080;
 	info.title = "so_long";
-	mlx.tile_size = 50;
-	mlx.player_direction = 0;
-	info.width = 1900;
-	info.height = 1000;
 	info.is_resizable = false;
+	mlx.map = map;
+	mlx.tile_size = 500;
+	mlx.player_direction = 0;
+	window_size(&mlx, &info);
 	mlx.mlx = mlx_init();
+	if (load_images(&mlx))
+		return ;
 	mlx.win = mlx_new_window(mlx.mlx, &info);
 	mlx_set_fps_goal(mlx.mlx, 60);
-	mlx.coin.image = mlx_new_image_from_file(mlx.mlx, "images/coin.png",
-			&mlx.coin.width, &mlx.coin.height);
-	mlx.wall.image = mlx_new_image_from_file(mlx.mlx, "images/wall.png",
-			&mlx.wall.width, &mlx.wall.height);
-	mlx.exit.image = mlx_new_image_from_file(mlx.mlx, "images/exit.png",
-			&mlx.exit.width, &mlx.exit.height);
-	mlx.grass.image = mlx_new_image_from_file(mlx.mlx, "images/ground.png",
-			&mlx.grass.width, &mlx.grass.height);
-	mlx.player.image = mlx_new_image_from_file(mlx.mlx, "images/player.png",
-			&mlx.player.width, &mlx.player.height);
 	mlx_on_event(mlx.mlx, mlx.win, MLX_KEYDOWN, key_hook, &mlx);
 	mlx_on_event(mlx.mlx, mlx.win, MLX_WINDOW_EVENT, window_hook, &mlx);
-	mlx.map = map;
 	mlx_add_loop_hook(mlx.mlx, update, &mlx);
 	mlx_loop(mlx.mlx);
-	return (0);
+	return ;
 }

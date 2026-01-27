@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 17:36:40 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/26 19:19:22 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/01/27 18:16:52 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,5 @@ int	flood(t_map *map)
 			index++;
 		}
 	}
-	// index = 0;
-	// while (index < ft_strlen(map->data))
-	// {
-	// 	if (index % map->linelen == 0)
-	// 		ft_printf("\n");
-	// 	ft_printf("%c", map->data[index]);
-	// 	index++;
-	// }
 	return (1);
 }
