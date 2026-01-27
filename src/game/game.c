@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:03:57 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/27 17:25:32 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/01/27 17:36:42 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ int	game(t_map *map)
 			&mlx.wall.width, &mlx.wall.height);
 	mlx.exit.image = mlx_new_image_from_file(mlx.mlx, "images/exit.png",
 			&mlx.exit.width, &mlx.exit.height);
-	mlx.grass.image = mlx_new_image_from_file(mlx.mlx, "images/grass.png",
+	mlx.grass.image = mlx_new_image_from_file(mlx.mlx, "images/ground.png",
 			&mlx.grass.width, &mlx.grass.height);
 	mlx.player.image = mlx_new_image_from_file(mlx.mlx, "images/player.png",
 			&mlx.player.width, &mlx.player.height);
