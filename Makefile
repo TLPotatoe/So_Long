@@ -6,19 +6,31 @@
 #    By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 15:55:14 by tlamit            #+#    #+#              #
-#    Updated: 2026/01/27 16:25:50 by tlamit           ###   ########.fr        #
+#    Updated: 2026/01/28 14:27:12 by tlamit           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC := cc
 
+SRCS_DIR := src/
+SRCS_PARSE_DIR := $(SRCS_DIR)/parse/
+SRCS_GAME_DIR := $(SRCS_DIR)/game/
+SRCS_UTILS_DIR := $(SRCS_DIR)/utils/
+
+SRCS_PARSE := $(SRCS_PARSE_DIR)/parser.c \
+			$(SRCS_PARSE_DIR)/check_map.c  \
+			$(SRCS_PARSE_DIR)/flood_fill.c
+
+SRCS_GAME := $(SRCS_GAME_DIR)/game.c \
+			$(SRCS_GAME_DIR)/moves.c
+
+SRCS_UTILS := $(SRCS_UTILS_DIR)/utils.c \
+			$(SRCS_UTILS_DIR)/game_utils.c
+
 SRCS := so_long.c \
-		src/parse/parser.c \
-		src/parse/check_map.c \
-		src/parse/flood_fill.c \
-		src/utils/utils.c \
-		src/game/game.c \
-		src/game/moves.c
+		$(SRCS_PARSE) \
+		$(SRCS_GAME) \
+		$(SRCS_UTILS)
 
 HEADER := -I includes \
 		-I Libft_C

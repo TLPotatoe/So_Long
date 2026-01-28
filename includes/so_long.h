@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 13:04:47 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/27 17:50:29 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/01/28 14:06:12 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,12 @@ typedef struct s_mlx
 }				t_mlx;
 
 void			game(t_map *map);
+int				load_images(t_mlx *mlx);
+void			level_finished(t_mlx *mlx);
+void			window_hook(int event, void *param);
+void			put_transformed_image(t_mlx *mlx, t_image *image, int index,
+					int state);
+
 int				flood(t_map *map);
 int				check_map_fill(t_map *map);
 int				check_map_content(t_map *map);
