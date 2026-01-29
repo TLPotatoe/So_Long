@@ -6,7 +6,7 @@
 #    By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 15:55:14 by tlamit            #+#    #+#              #
-#    Updated: 2026/01/28 14:27:12 by tlamit           ###   ########.fr        #
+#    Updated: 2026/01/29 01:56:48 by tlamit           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,10 +62,10 @@ $(NAME): $(OBJS) $(LIBS)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 
-$(LIBFT): submodule_init
+$(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR) -j
 
-$(MacroLibX): submodule_init
+$(MacroLibX):
 	$(MAKE) -C $(MacroLibX_DIR) -j
 
 clean:

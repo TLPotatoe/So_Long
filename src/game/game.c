@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:03:57 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/28 14:04:31 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/01/29 01:09:29 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	window_size(t_mlx *mlx, mlx_window_create_info *info)
 	info->width = mlx->map->linelen * mlx->tile_size;
 	info->height = ft_strlen(mlx->map->data) / mlx->map->linelen
 		* (float)mlx->tile_size;
+	// mlx->tile_size *= 0.75;
 }
 
 void	game(t_map *map)
@@ -104,7 +105,7 @@ void	game(t_map *map)
 	static mlx_window_create_info	info = {0};
 
 	info.width = 1920;
-	info.height = 1080;
+	info.height = 1000;
 	info.title = "so_long";
 	info.is_resizable = false;
 	mlx.map = map;

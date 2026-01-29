@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:24:56 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/27 18:18:06 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/01/29 01:23:01 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ int	main(int ac, char **av)
 	if (!check_file_name(av[1]))
 		return (0);
 	if (parse_map(av[1], &map))
+	{
+		free(map.data);
 		return (0);
+	}
 	flood(&map);
 	if (!check_map_fill(&map))
 	{

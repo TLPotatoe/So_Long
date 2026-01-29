@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 10:51:46 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/27 18:16:41 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/01/29 02:14:54 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,18 @@ int	check_map_content(t_map *map)
 	while (map->data[index])
 	{
 		if (!ft_strchr("10EPC", map->data[index++]))
+		{
+			write(2, "Error\nIllegal char in map.\n", 28);
 			return (0);
+		}
 	}
-	if (count_item(map->data, 'P') != 1 || count_item(map->data, 'E') != 1
+	if (count_item(map->data, 'P') != 1)
+		write(2, "Error\nPlayer count is incorrect.\n", 34);
+	else if (count_item(map->data, 'E') != 1)
+		write(2, "Error\nExit count is incorrect\n", 31);
+	else if (count_item(map->data, 'C') < 1)
+		write(2, "Error\nCollectible count needs to be 1 or more.\n", 48);
+	if (count_item(map->data, 'E') != 1 || count_item(map->data, 'P') != 1
 		|| count_item(map->data, 'C') < 1)
 		return (0);
 	return (1);
@@ -50,11 +59,14 @@ int	check_map_fill(t_map *map)
 	index = 0;
 	while (map->data[index])
 	{
-		if (ft_strchr("0EC", map->data[index++]))
+		if (ft_strchr("EC", map->data[index++]))
+		{
+			write(2,
+				"Error\nOne or more collectibles or exit is not reachable.\n",
+				58);
 			return (0);
+		}
 	}
-	if (count_item(map->data, '0') != 0 || count_item(map->data, 'C') != 0
-		|| count_item(map->data, 'E') != 0)
-		return (0);
+	ft_strreplace(map->data, "0", 'F');
 	return (1);
 }

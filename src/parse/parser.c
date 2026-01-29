@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 17:37:31 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/26 18:49:45 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/01/28 23:49:25 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static char	*get_raw_file(char *filename)
 	char	*buffer;
 
 	fd = open(filename, O_RDONLY);
+	if (fd < 2)
+		write(2, "Error: Unanle to read file.\n", 28);
 	if (fd < 2)
 		return (NULL);
 	line = NULL;
@@ -72,7 +74,7 @@ static int	check_border(char *data, int len, int line_len)
 
 	if (check_global_len(data))
 	{
-		ft_printf("Hello");
+		// write(2, "Error: map size not regular\n", 28);
 		return (1);
 	}
 	ft_remchr(data, "\n");
@@ -108,7 +110,12 @@ static int	check_map(char *data)
 		index++;
 	}
 	if (len % linelen != 0)
+	{
+		write(2, "Error: map size not regular\n", 29);
 		return (0);
+	}
+	if (check_border(data, len, linelen))
+		write(2, "Error: map border incorrect.\n", 29);
 	return (!check_border(data, len, linelen) * linelen);
 }
 
