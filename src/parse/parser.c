@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 17:37:31 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/28 23:49:25 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/01/30 15:04:22 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ static char	*get_raw_file(char *filename)
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 2)
-		write(2, "Error: Unanle to read file.\n", 28);
+		write(2, "Error:\nUnable to read file.\n", 29);
 	if (fd < 2)
-		return (NULL);
+		return ((char *)1);
 	line = NULL;
 	while (1)
 	{
@@ -73,10 +73,7 @@ static int	check_border(char *data, int len, int line_len)
 	int	index;
 
 	if (check_global_len(data))
-	{
-		// write(2, "Error: map size not regular\n", 28);
 		return (1);
-	}
 	ft_remchr(data, "\n");
 	index = 0;
 	while (index < len)
@@ -109,13 +106,13 @@ static int	check_map(char *data)
 			len++;
 		index++;
 	}
-	if (len % linelen != 0)
+	if (!linelen || len % linelen != 0)
 	{
-		write(2, "Error: map size not regular\n", 29);
-		return (0);
+		write(2, "Error:\nMap size not rectangular.\n", 34);
+		return (-1);
 	}
 	if (check_border(data, len, linelen))
-		write(2, "Error: map border incorrect.\n", 29);
+		write(2, "Error:\nMap border incorrect.\n", 30);
 	return (!check_border(data, len, linelen) * linelen);
 }
 
@@ -123,11 +120,18 @@ int	parse_map(char *filename, t_map *map)
 {
 	map->data = get_raw_file(filename);
 	if (!map->data)
+	{
+		write(2, "Error:\nEmpty file.\n", 20);
+		return (1);
+	}
+	if (map->data == (char *)1)
 		return (1);
 	map->linelen = check_map(map->data);
-	if (map->linelen == 0)
+	if (map->linelen == -1)
+		return (1);
+	if (map->linelen < 3 || ft_strlen(map->data) / map->linelen < 3)
 	{
-		free(map->data);
+		write(2, "Error\nMap needs to be at least 3 collums and 3 rows.\n", 54);
 		return (1);
 	}
 	return (!check_map_content(map));
