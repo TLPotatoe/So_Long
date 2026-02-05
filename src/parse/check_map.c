@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 10:51:46 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/30 15:03:11 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/02/05 17:36:23 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	check_map_content(t_map *map)
 		if (!ft_strchr("10EPC", map->data[index++]))
 		{
 			write(2, "Error\nIllegal character in map.\n", 33);
-			return (0);
+			return (1);
 		}
 	}
 	if (count_item(map->data, 'P') != 1)
@@ -48,8 +48,8 @@ int	check_map_content(t_map *map)
 		write(2, "Error\nCollectible count needs to be 1 or more.\n", 48);
 	if (count_item(map->data, 'E') != 1 || count_item(map->data, 'P') != 1
 		|| count_item(map->data, 'C') < 1)
-		return (0);
-	return (1);
+		return (1);
+	return (0);
 }
 
 int	check_map_fill(t_map *map)
