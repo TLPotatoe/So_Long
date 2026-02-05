@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 17:37:31 by tlamit            #+#    #+#             */
-/*   Updated: 2026/02/03 13:56:09 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/02/05 16:57:05 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,15 +96,14 @@ static int	check_map(char *data)
 	int	linelen;
 
 	len = 0;
-	index = 0;
+	index = -1;
 	linelen = 0;
-	while (data[index])
+	while (data[++index])
 	{
 		if (data[index] == '\n' && !linelen)
 			linelen = index;
 		if (data[index] != '\n')
 			len++;
-		index++;
 	}
 	if (!linelen || len % linelen != 0)
 	{
@@ -112,8 +111,11 @@ static int	check_map(char *data)
 		return (-1);
 	}
 	if (check_border(data, len, linelen))
+	{
 		write(2, "Error:\nMap border incorrect.\n", 30);
-	return (!check_border(data, len, linelen) * linelen);
+		return (-1);
+	}
+	return (linelen);
 }
 
 int	parse_map(char *filename, t_map *map)
@@ -125,7 +127,7 @@ int	parse_map(char *filename, t_map *map)
 		return (1);
 	}
 	if (map->data == (char *)1)
-		return (1);
+		return (2);
 	map->linelen = check_map(map->data);
 	if (map->linelen == -1)
 		return (1);
@@ -140,5 +142,5 @@ int	parse_map(char *filename, t_map *map)
 			55);
 		return (1);
 	}
-	return (!check_map_content(map));
+	return (0);
 }
