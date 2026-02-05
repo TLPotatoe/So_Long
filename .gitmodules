@@ -1,6 +1,6 @@
 [submodule "MacroLibX"]
 	path = MacroLibX
 	url = https://github.com/seekrs/MacroLibX.git
-[submodule "Libft_C"]
-	path = Libft_C
-	url = https://github.com/TLPotatoe/Libft_C.git
+[submodule "libft"]
+	path = libft
+	url = git@github.com:TLPotatoe/libft.git

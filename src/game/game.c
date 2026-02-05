@@ -6,15 +6,11 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:03:57 by tlamit            #+#    #+#             */
-/*   Updated: 2026/02/03 13:57:28 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/02/05 13:54:06 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MacroLibX/includes/mlx.h"
-#include "MacroLibX/includes/mlx_extended.h"
 #include "so_long.h"
-#include <math.h>
-#include <stdio.h>
 
 void	tile_draw(t_mlx *mlx, t_image *image, int index)
 {

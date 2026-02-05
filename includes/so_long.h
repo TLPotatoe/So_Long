@@ -6,16 +6,16 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 13:04:47 by tlamit            #+#    #+#             */
-/*   Updated: 2026/01/28 14:06:12 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/02/05 13:53:39 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include "MacroLibX/includes/mlx.h"
-# include "MacroLibX/includes/mlx_extended.h"
 # include "libft.h"
+# include "mlx.h"
+# include "mlx_extended.h"
 
 typedef struct s_map
 {

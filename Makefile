@@ -6,7 +6,7 @@
 #    By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 15:55:14 by tlamit            #+#    #+#              #
-#    Updated: 2026/01/29 01:56:48 by tlamit           ###   ########.fr        #
+#    Updated: 2026/02/05 13:53:21 by tlamit           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,12 +33,13 @@ SRCS := so_long.c \
 		$(SRCS_UTILS)
 
 HEADER := -I includes \
-		-I Libft_C
+		-I libft \
+		-I MacroLibX/includes
 
 NAME := so_long
 OBJS := $(SRCS:.c=.o)
 
-LIBFT_DIR	:=	Libft_C
+LIBFT_DIR	:=	libft
 LIBFT 		:=	$(LIBFT_DIR)/libft.a
 
 MacroLibX_DIR	:= MacroLibX
