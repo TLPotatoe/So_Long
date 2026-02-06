@@ -6,7 +6,7 @@
 #    By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 15:55:14 by tlamit            #+#    #+#              #
-#    Updated: 2026/02/05 13:53:21 by tlamit           ###   ########.fr        #
+#    Updated: 2026/02/06 19:56:15 by tlamit           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ SRCS_GAME := $(SRCS_GAME_DIR)/game.c \
 			$(SRCS_GAME_DIR)/moves.c
 
 SRCS_UTILS := $(SRCS_UTILS_DIR)/utils.c \
-			$(SRCS_UTILS_DIR)/game_utils.c
+			$(SRCS_UTILS_DIR)/game_utils.c \
+			$(SRCS_UTILS_DIR)/images_utils.c
 
 SRCS := so_long.c \
 		$(SRCS_PARSE) \

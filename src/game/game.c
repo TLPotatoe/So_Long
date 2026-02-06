@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:03:57 by tlamit            #+#    #+#             */
-/*   Updated: 2026/02/06 15:59:43 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/02/06 20:44:04 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,24 @@ void	key_hook(int key, void *param)
 	level_finished(mlx);
 }
 
+void	window_size(t_mlx *mlx, mlx_window_create_info *info)
+{
+	float	rescale_x;
+	float	rescale_y;
+
+	rescale_x = (float)mlx->map->linelen * (float)mlx->tile_size
+		/ (float)info->width;
+	rescale_y = (float)ft_strlen(mlx->map->data) / (float)mlx->map->linelen
+		* (float)mlx->tile_size / (float)info->height;
+	if (rescale_x > rescale_y)
+		mlx->tile_size /= rescale_x;
+	else
+		mlx->tile_size /= rescale_y;
+	info->width = mlx->map->linelen * mlx->tile_size;
+	info->height = ft_strlen(mlx->map->data) / mlx->map->linelen
+		* (float)mlx->tile_size;
+}
+
 void	update(void *param)
 {
 	t_mlx	*mlx;
@@ -76,24 +94,6 @@ void	update(void *param)
 	}
 }
 
-void	window_size(t_mlx *mlx, mlx_window_create_info *info)
-{
-	float	rescale_x;
-	float	rescale_y;
-
-	rescale_x = (float)mlx->map->linelen * (float)mlx->tile_size
-		/ (float)info->width;
-	rescale_y = (float)ft_strlen(mlx->map->data) / (float)mlx->map->linelen
-		* (float)mlx->tile_size / (float)info->height;
-	if (rescale_x > rescale_y)
-		mlx->tile_size /= rescale_x;
-	else
-		mlx->tile_size /= rescale_y;
-	info->width = mlx->map->linelen * mlx->tile_size;
-	info->height = ft_strlen(mlx->map->data) / mlx->map->linelen
-		* (float)mlx->tile_size;
-}
-
 void	game(t_map *map)
 {
 	t_mlx							mlx;
@@ -107,6 +107,7 @@ void	game(t_map *map)
 	mlx.tile_size = 500;
 	mlx.player_direction = 0;
 	window_size(&mlx, &info);
+	scale_images(&mlx);
 	mlx.mlx = mlx_init();
 	if (load_images(&mlx))
 		return ;
