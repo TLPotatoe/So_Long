@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:24:56 by tlamit            #+#    #+#             */
-/*   Updated: 2026/02/05 16:59:27 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/02/07 01:49:06 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ static int	check_file_name(char *filename)
 
 	end = ft_strrchr(filename, '.');
 	if (!end)
-		return (1);
-	if (ft_strlen(filename) <= 4)
 		return (1);
 	len = ft_strlen(filename + (end - filename));
 	if (len != 4)
@@ -60,9 +58,20 @@ int	main(int ac, char **av)
 	static t_map	map = {0};
 
 	if (ac != 2)
+	{
+		write(2, "Error\n./so_long <map>.ber\n", 27);
 		return (0);
+	}
+	if (ft_strlen(av[1]) < 5)
+	{
+		write(2, "Error\nInvalid file name.\n", 26);
+		return (0);
+	}
 	if (check_file_name(av[1]))
+	{
+		write(2, "Error\nInvalid file extension.\n", 31);
 		return (0);
+	}
 	if (map_init(av[1], &map))
 		return (0);
 	map.previous_slot = 0;

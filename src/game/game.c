@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:03:57 by tlamit            #+#    #+#             */
-/*   Updated: 2026/02/06 20:44:04 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/02/07 01:46:25 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,6 @@ void	key_hook(int key, void *param)
 	else if (key == 82)
 		up(mlx->map, &i);
 	level_finished(mlx);
-}
-
-void	window_size(t_mlx *mlx, mlx_window_create_info *info)
-{
-	float	rescale_x;
-	float	rescale_y;
-
-	rescale_x = (float)mlx->map->linelen * (float)mlx->tile_size
-		/ (float)info->width;
-	rescale_y = (float)ft_strlen(mlx->map->data) / (float)mlx->map->linelen
-		* (float)mlx->tile_size / (float)info->height;
-	if (rescale_x > rescale_y)
-		mlx->tile_size /= rescale_x;
-	else
-		mlx->tile_size /= rescale_y;
-	info->width = mlx->map->linelen * mlx->tile_size;
-	info->height = ft_strlen(mlx->map->data) / mlx->map->linelen
-		* (float)mlx->tile_size;
 }
 
 void	update(void *param)

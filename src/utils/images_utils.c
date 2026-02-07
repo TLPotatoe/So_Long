@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 19:57:28 by tlamit            #+#    #+#             */
-/*   Updated: 2026/02/06 20:25:53 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/02/06 21:09:17 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,22 @@ int	load_images(t_mlx *mlx)
 		return (1);
 	scale_images(mlx);
 	return (0);
+}
+
+void	window_size(t_mlx *mlx, mlx_window_create_info *info)
+{
+	float	rescale_x;
+	float	rescale_y;
+
+	rescale_x = (float)mlx->map->linelen * (float)mlx->tile_size
+		/ (float)info->width;
+	rescale_y = (float)ft_strlen(mlx->map->data) / (float)mlx->map->linelen
+		* (float)mlx->tile_size / (float)info->height;
+	if (rescale_x > rescale_y)
+		mlx->tile_size /= rescale_x;
+	else
+		mlx->tile_size /= rescale_y;
+	info->width = mlx->map->linelen * mlx->tile_size;
+	info->height = ft_strlen(mlx->map->data) / mlx->map->linelen
+		* (float)mlx->tile_size;
 }
