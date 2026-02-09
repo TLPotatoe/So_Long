@@ -6,7 +6,7 @@
 /*   By: tlamit <titouan.lamit@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 17:37:31 by tlamit            #+#    #+#             */
-/*   Updated: 2026/02/06 20:10:06 by tlamit           ###   ########.fr       */
+/*   Updated: 2026/02/09 13:41:43 by tlamit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int	parse_map(char *filename, t_map *map)
 		write(2, "Error\nMap needs to be at least 3 collums and 3 rows.\n", 54);
 		return (1);
 	}
-	if (map->linelen > 200 || ft_strlen(map->data) / map->linelen > 200)
+	if (map->linelen > 50 || ft_strlen(map->data) / map->linelen > 50)
 	{
 		write(2, "Error\nMap needs to be at most 50 collums and 50 rows.\n",
 			55);
